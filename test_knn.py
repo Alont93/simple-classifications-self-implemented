@@ -32,7 +32,7 @@ def split_samples_and_lables(data):
 def q7c():
     data = read_data()
 
-    for i in range(1,4):
+    for i in range(1,11):
         test_iteration(data, i)
 
     plt.xlabel("K")
@@ -48,7 +48,7 @@ def test_iteration(data, test_number):
     test_set_samples, test_set_labels = split_samples_and_lables(test_set)
 
     ks_array = np.array(Ks)
-    errors = np.zeros_like(ks_array)
+    errors = np.zeros_like(ks_array).astype(np.float64)
 
     i = 0
     for k in Ks:
@@ -60,7 +60,7 @@ def test_iteration(data, test_number):
         errors[i] = error
         i += 1
 
-    plt.plot(ks_array, errors, label="test " + str(test_number))
+    plt.plot(ks_array, errors, label="test " + str(test_number), marker='o')
 
 
 
