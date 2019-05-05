@@ -46,7 +46,7 @@ def check_Ni(test_set_lables, sorted_probabilities_indices, requested_TPR):
 def q7():
     data = read_data()
 
-    for i in range(1,10):
+    for i in range(1,11):
         test_iteration(data, i)
 
     plt.xlabel("FPR")
