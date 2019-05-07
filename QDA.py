@@ -34,14 +34,13 @@ class QDA:
         self.__covariance_matrices = np.zeros((self.__num_of_labels, self.__number_of_features,
                                                self.__number_of_features))
         for i in range(self.__num_of_labels):
-            X_minus_mean = X_splited_by_labels[i]
-            self.__covariance_matrices[i] = X_minus_mean.T @ X_minus_mean
+            X_minus_mean = X_splited_by_labels[i] - self.__means[i]
+            self.__covariance_matrices[i] = X_minus_mean.T @ X_minus_mean / (counts[i] - 1)
 
     def predict(self, x):
         sigmas_inv = np.zeros_like(self.__covariance_matrices)
         for i in range(self.__num_of_labels):
             sigmas_inv[i] = np.linalg.inv(self.__covariance_matrices[i])
-
 
         xT = x.reshape((1, self.__number_of_features))
         means = self.__means
@@ -50,7 +49,9 @@ class QDA:
         for i in range(self.__num_of_labels):
             label_mean = self.__means[i].reshape(self.__number_of_features, 1)
             probabilities[i] = xT @ sigmas_inv[i] @ label_mean \
-                               - 0.5 * label_mean.T @ sigmas_inv[i] @ label_mean + np.log(self.__frequencies[i])
+                               - 0.5 * label_mean.T @ sigmas_inv[i] @ label_mean \
+                               + np.log(self.__frequencies[i])\
+                               + np.log(np.sqrt(np.linalg.det(self.__covariance_matrices[i])))
 
         max_probability_index = np.argmax(probabilities)
         return self.__labels[max_probability_index]

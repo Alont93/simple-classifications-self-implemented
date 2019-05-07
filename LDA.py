@@ -34,8 +34,7 @@ class LDA:
 
         partial_covariances = []
         for i in range(self.__num_of_labels):
-            X_minus_mean = X_splited_by_labels[i]
-            samples_for_label = X_splited_by_labels[i].shape[0]
+            X_minus_mean = X_splited_by_labels[i] - self.__means[i]
             partial_covariances.append(X_minus_mean.T @ X_minus_mean)
 
         self.__covariance_matrix = reduce(np.add, partial_covariances) / (number_of_samples - 2)
