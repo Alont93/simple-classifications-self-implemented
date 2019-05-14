@@ -1,6 +1,7 @@
 import numpy as np
 from functools import reduce
 
+RELEVANT_FEATURES = [1, 4, 21, 32, 22]
 
 class LDA:
 
@@ -13,6 +14,8 @@ class LDA:
         self.__number_of_features = None
 
     def fit(self, X, y):
+
+        X = X[:, RELEVANT_FEATURES]
 
         number_of_samples = y.size
         number_of_features = X.shape[1]
@@ -40,9 +43,11 @@ class LDA:
         self.__covariance_matrix = reduce(np.add, partial_covariances) / (number_of_samples - 2)
 
     def predict(self, x):
+
+        x = x[RELEVANT_FEATURES]
+
         sigma_inv = np.linalg.inv(self.__covariance_matrix)
         xT = x.reshape((1, self.__number_of_features))
-        means = self.__means
 
         probabilities = np.zeros_like(self.__labels)
         for i in range(self.__num_of_labels):

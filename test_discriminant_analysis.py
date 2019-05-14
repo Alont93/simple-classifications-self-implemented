@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import LDA
 import QDA
 
-NUMBER_OF_TESTS = 3
+NUMBER_OF_TESTS = 10
 TEST_SET_AMOUNT = 1000
 DATA_PATH = './spam.data.txt'
 

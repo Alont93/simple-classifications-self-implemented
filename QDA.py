@@ -1,6 +1,7 @@
 import numpy as np
 from functools import reduce
 
+RELEVANT_FEATURES = [1, 4, 21, 32, 22]
 
 class QDA:
 
@@ -13,6 +14,9 @@ class QDA:
         self.__number_of_features = None
 
     def fit(self, X, y):
+
+        X = X[:, RELEVANT_FEATURES]
+
         number_of_samples = y.size
         number_of_features = X.shape[1]
         self.__number_of_features = number_of_features
@@ -38,6 +42,9 @@ class QDA:
             self.__covariance_matrices[i] = X_minus_mean.T @ X_minus_mean / (counts[i] - 1)
 
     def predict(self, x):
+
+        x = x[RELEVANT_FEATURES]
+
         sigmas_inv = np.zeros_like(self.__covariance_matrices)
         for i in range(self.__num_of_labels):
             sigmas_inv[i] = np.linalg.inv(self.__covariance_matrices[i])
