@@ -57,8 +57,7 @@ class QDA:
             label_mean = self.__means[i].reshape(self.__number_of_features, 1)
             probabilities[i] = xT @ sigmas_inv[i] @ label_mean \
                                - 0.5 * label_mean.T @ sigmas_inv[i] @ label_mean \
-                               + np.log(self.__frequencies[i])\
-                               + np.log(np.sqrt(np.linalg.det(self.__covariance_matrices[i])))
+                               + np.log(self.__frequencies[i])
 
         max_probability_index = np.argmax(probabilities)
         return self.__labels[max_probability_index]

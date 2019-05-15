@@ -1,10 +1,10 @@
 import numpy as np
 from numpy import random as rd
 import pandas as pd
-import matplotlib.pyplot as plt
 
 import LDA
 import QDA
+
 
 NUMBER_OF_TESTS = 10
 TEST_SET_AMOUNT = 1000
@@ -35,16 +35,12 @@ def q7c():
     errors = np.zeros(NUMBER_OF_TESTS)
 
     for i in range(NUMBER_OF_TESTS):
-        errors[i-1] = test_iteration(data, i)
+        errors[i-1] = test_iteration(data)
 
-    plt.plot(errors, marker='o')
-    plt.xlabel("Test number")
-    plt.ylabel("Error")
-    plt.title("Errors along test")
-    plt.show()
+    print(np.average(errors))
 
 
-def test_iteration(data, test_number):
+def test_iteration(data):
     train_set, test_set = randomly_split_data(data)
     train_set_samples, train_set_labels = split_samples_and_lables(train_set)
     test_set_samples, test_set_labels = split_samples_and_lables(test_set)
@@ -55,7 +51,6 @@ def test_iteration(data, test_number):
 
     error = np.sum(np.square(predictions - test_set_labels)) / TEST_SET_AMOUNT
     return error
-
 
 
 q7c()
